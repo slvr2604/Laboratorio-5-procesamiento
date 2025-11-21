@@ -254,11 +254,9 @@ Luego se graficaron en su forma original y también con zoom:
 <img width="1006" height="374" alt="image" src="https://github.com/user-attachments/assets/7d8a419c-5aba-45e4-b949-4e9400bee643" />
 
 
-Luego, se identificaron los picos R en cada uno de los segmentos y se calcularon los intervalos R-R 
-
 
 ## d. Análisis de la HRV en el dominio del tiempo  
-Para el análisis de la HRV se usa el siguiente código:
+Luego, se identificaron los picos R en cada uno de los segmentos y se calcularon los intervalos R-R 
 ```
 picos_R_reposo, _ = find_peaks(
     senal_segmento1,
@@ -306,19 +304,27 @@ Y adicionalemte se arrojan los primeros intervalos de las gráficas:
 Primeros intervalos RR (reposo): [0.25   0.2535 0.425  0.303  0.4465 0.275  0.423  0.277  0.4385 0.2635]
 Primeros intervalos RR (lectura): [0.4445 0.298  0.425  0.281  0.447  0.256  0.4535 0.2605 0.399  0.318 ]
 <img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/5f8b2c3b-1d97-4270-be2f-2d3a2d5f621b" />
-Y observamos la serie de intervalos:
+Y observamos la serie de intervalos tanto en reposo como durante la lectura.
 <img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/4284b71c-38e4-49b5-8cc4-a410faace381" />
+<img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/d5272ae3-6ed4-4dd4-9cf0-7be5b707a5fa" />
 
 Los intervalos RR oscilan aproximadamente entre 0.25 s y 0.55 s, con algunos picos aislados hasta ~0.65 s.
 Esto corresponde a una frecuencia cardiaca aproximada de:
 
-100 latidos por m
+100 a 270 latidos por minuto. Un resultado bastante alto para ser medido en una persona que se encuentra en reposo, aunque podría verse relacionado con la medición de doble latido, un error que es común cuando se hace una medición de ECG.
+Por otro lado, cuando observamos la gráfica de intervalos de la lectura encontramos muestra un patrón típico de actividad autonómica aumentada durante la lectura en voz alta. Se mantiene una frecuencia elevada y estable, hay una reducción  de variabilidad cardiaca, las fluctuaciones rapidas las asociamos al control ventilatorio cuando la persona estudiada hablaba. A su vez los picos son compatibles con las pausas respiratorias o artefactos naturales que ocurren al habla.
 
-En reposo normal esperarías 60–100 lpm (RR ≈ 0.6–1 s).
+Finalmente calculamos el HRV en dominio del tiempo.
+Con el siguiente código:
+```
+# Media de intervalos RR
+media_RR_reposo = np.mean(intervalos_RR_reposo)
+media_RR_lectura = np.mean(intervalos_RR_lectura)
 
-Tu señal parece provenir de una persona joven/entrenada o de un segmento de mayor frecuencia cardiaca, pero con variabilidad fisiológica clara.
-
-
+# Desviación estándar de intervalos RR (SDNN)
+sdnn_reposo = np.std(intervalos_RR_reposo)
+sdnn_lectura = np.std(intervalos_RR_lectura)
+```
 
 Segmento	Media RR (s)	SDNN (s)
 Reposo	  0.3679 s	    0.0965 s
@@ -332,25 +338,72 @@ Es decir que el comportamiento es coherente, cuando hay reposo hay una mayor var
 
 
 # Parte C.
-## e. Comparación del diagrama de poincaré.
+## e. Comparación del diagrama de Poincaré.
+Costruimos el diagrama de Poincaré con el siguiente código:
+```
+plt.figure(figsize=(6,6))
+plt.scatter(intervalos_RR_reposo[:-1], intervalos_RR_reposo[1:],
+            color='purple', s=10)
+plt.title("Diagrama de Poincaré — Reposo (0–2 min)")
+plt.xlabel("RR(n) [s]")
+plt.ylabel("RR(n+1) [s]")
+plt.grid(True)
+plt.show()
+
+plt.figure(figsize=(6,6))
+plt.scatter(intervalos_RR_lectura[:-1], intervalos_RR_lectura[1:],
+            color='green', s=10)
+plt.title("Diagrama de Poincaré — Lectura (2–4 min)")
+plt.xlabel("RR(n) [s]")
+plt.ylabel("RR(n+1) [s]")
+plt.grid(True)
+plt.show()
+```
+El cual arrojó las siguientes gráficas:
+<img width="546" height="548" alt="image" src="https://github.com/user-attachments/assets/a02cf251-4d7a-40cd-bb19-85969e1bacbf" />
+<img width="545" height="548" alt="image" src="https://github.com/user-attachments/assets/0719ae34-697c-44a6-b437-a3a6bae26cdd" />
 
 Cuando está en reposo hay una nube de puntos más dispersión, especialmente en el eje transversal (SD1), a su vez hay mayor variabilidad latido a latido. También se observan sub-clusters que indican respiración sinusal.
-Ahora, durante la lectura la nube es más compacta y hay menor dispersión trasnversal en SD1 y longitudinal en SD2. Es decir que cuando está en reposo hay mayor dispersión, por lo que hay un mayor tono vagal. Y cuando está leyendom la dispersión se reduce por lo que hay mayor tónico.
+Ahora, durante la lectura la nube es más compacta y hay menor dispersión trasnversal en SD1 y longitudinal en SD2. Es decir que cuando está en reposo hay mayor dispersión, por lo que hay un mayor tono vagal. Y cuando está leyendo la dispersión se reduce por lo que hay mayor tónico.
 
-Para interpretar los datos obtenido en el diagrama Poincaré:
-En el SD1 Y SD2.
+Luego hicimos el cálculo de SD1 y SD2, y de CVI y CSI con el siguiente código:
+
+```
+def calcular_SD1_SD2(intervalos_RR):
+    # diferencias consecutivas
+    diferencia_RR = intervalos_RR[1:] - intervalos_RR[:-1]
+
+    SD1 = np.sqrt(0.5) * np.std(diferencia_RR)
+    SD2 = np.sqrt(2*(np.std(intervalos_RR)**2) - SD1**2)
+
+    return SD1, SD2
+
+SD1_reposo, SD2_reposo = calcular_SD1_SD2(intervalos_RR_reposo)
+SD1_lectura, SD2_lectura = calcular_SD1_SD2(intervalos_RR_lectura)
+```
+Y el de CVI y CSI:
+
+```
+def calcular_CVI_CSI(SD1, SD2):
+    CVI = np.log10(SD1 * SD2)
+    CSI = SD2 / SD1
+    return CVI, CSI
+
+CVI_reposo, CSI_reposo = calcular_CVI_CSI(SD1_reposo, SD2_reposo)
+CVI_lectura, CSI_lectura = calcular_CVI_CSI(SD1_lectura, SD2_lectura)
+```
+La función `calcular_SD1_SD2` se encarga de obtiener SD1 y SD2 a través de funciones como  `np.std()`, `np.sqrt()`. Y `calcular_CVI_CSI` obtiene CVI y CSI a través de funciones como `np.log10()` para las operaciones matemáticas.
+
+Interpretando los datos obtenidos en el SD1 Y SD2.
 ### SD1.
 El reposo es de 0.1289 s y en lectura es de 0.0821 s.
-Reposo: 0.1289 s
-
 Es decir que SD1 disminuye notablemente durante la lectura, lo que indica una reducción de la actividad parasimpática.
 Esto es coherente con una mayor demanda cognitiva ya que el cuerpo atenúa la relajación para permitir mayor atención.
 
 ### SD2.
 En reposo es de 0.0448s y cuando lee es de 0.0380s. Por lo que aunque SD2 también disminuye en lectura, lo hace en menor medida que SD1.
 Esto sugiere que la variabilidad total se reduce, pero lo más afectado es el componente parasimpático (SD1), lo que indica un desplazamiento hacia mayor actividad simpática.
-
-  En el Índice CVI es decir la actividad vagal, el reposo se ubica en –2.2390 mientras en la lectura se encuentra en –2.5061
+En el Índice CVI es decir la actividad vagal, el reposo se ubica en –2.2390 mientras en la lectura se encuentra en –2.5061
 Lo que nos indica que un CVI menos negativo representa mayor influencia vagal. Por tanto, el CVI es mayor en reposo, confirmando que la actividad parasimpática domina cuando no hay exigencia cognitiva.
 Y durante la lectura, el CVI disminuye, indicando supresión vagal típica del estado de concentración.
 
@@ -360,12 +413,9 @@ Y en lectura en 0.4620.
 Por lo que los valores más altos indican mayor actividad simpática, asociada a alerta, estrés o tareas cognitivas.
 A su vez el CSI aumenta durante la lectura indicando mayor tono simpático y el aumento no es extremo, lo que indica una activación fisiológica moderada, consistente con una tarea de lectura, no con estrés intenso.
 
-En conjunto, los cuatro parámetros (SD1, SD2, CVI, CSI) muestran un patrón claro:
-La componente autonómico tiene dominancia en reposo	
-La dominancia en lectura es parasimpático.
+Es decir que este comportamiento tiene sentido con la componente autonómico ya que tiene dominancia en reposo, la dominancia en lectura es parasimpático.
 Tiene alta variabilidad rápida y actividad vagal predominante.
-
-En la lectura de los 2–4 minutos hay una reducción marcada de SD1 lo que indica una disminución parasimpática.
+Y en la lectura de los 2–4 minutos hay una reducción marcada de SD1 lo que indica una disminución parasimpática.
 Al aumento del CSI hay una mayor actividad simpática, lo que refleja una activación compatible con concentración y atención cognitiva.
 
 # REFERENCIAS 
