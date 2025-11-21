@@ -356,8 +356,14 @@ plt.ylabel("RR(n+1) [s]")
 plt.grid(True)
 plt.show()
 ```
+
+
 El cual arrojó las siguientes gráficas:
+
+
 <img width="546" height="548" alt="image" src="https://github.com/user-attachments/assets/a02cf251-4d7a-40cd-bb19-85969e1bacbf" />
+
+
 <img width="545" height="548" alt="image" src="https://github.com/user-attachments/assets/0719ae34-697c-44a6-b437-a3a6bae26cdd" />
 
 Cuando está en reposo hay una nube de puntos más dispersión, especialmente en el eje transversal (SD1), a su vez hay mayor variabilidad latido a latido. También se observan sub-clusters que indican respiración sinusal.
