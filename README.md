@@ -161,7 +161,10 @@ Se importaron las librerías necesarias para el procesamiento de la señal y se 
 Inicialmente se intentó implementar un filtro IIR pasabanda, pero los cálculos requeridos presentaban un alto nivel de complejidad, especialmente al justificar manualmente los coeficientes y garantizar la estabilidad del sistema. Por esta razón, se optó por una estrategia alternativa: aplicar un filtro FIR pasaalto para eliminar la deriva de baja frecuencia, seguido de un filtro IIR pasabajo para atenuar el ruido de alta frecuencia.
 
 Sin embargo, durante la implementación del filtro IIR pasabajo aparecía una línea recta, lo cual indicaba una posible saturación e incluso cierta inestabilidad que pudo ser numérica o se le atribuye a errores en la inicialización del filtro. Por otro lado, el filtro FIR pasaalto generó coeficientes excesivamente largos, lo que dificultó su cálculo manual y su validación. Esto evidenció la necesidad de utilizar funciones para el la implementacón del mismo.  
-**PEGAR CALCULOSSS**  
+![Imagen de WhatsApp 2025-11-21 a las 10 29 03_1994c26d](https://github.com/user-attachments/assets/ce942203-9bbe-4f2e-940f-5a0dbab302be)
+![Imagen de WhatsApp 2025-11-21 a las 10 29 05_ae08a882](https://github.com/user-attachments/assets/a830c488-0fdc-4ba5-a94b-69cb4767ae4b)
+
+
 Al final se optó por hacerlo con un pasabanda con funciones de phyton, tambien se ingreso la ecuación en diferencias para que alobtener los coeficientes computacionalmente se reemplazaran alli
 
 
