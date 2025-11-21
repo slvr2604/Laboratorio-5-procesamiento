@@ -79,11 +79,66 @@ De manera conjunta, la HRV y el diagrama de Poincaré permiten comprender no só
 
 ### -Al realizar este análisis, deberán formular el plan de acción para cumplir con el objetivo de la práctica y formularlo como un diagrama de flujo. 
 
-<img width="850" height="1280" alt="image" src="https://github.com/user-attachments/assets/3a531400-7888-49e8-8b09-d820d1460511" />
+<img width="850" height="1280" alt="image" src="https://github.com/user-attachments/assets/3a531400-7888-49e8-8b09-d820d1460511" />  
 
+## b. Adquisición de la señal ECG   
+Para la adquisición de la señal ECG se utilizó el mismo código en Python previamente implementado durante el laboratorio de EMG, el cual permite obtener datos en tiempo real y descargar la señal para su posterior análisis. La única modificación realizada fue en la frecuencia de muestreo, que se ajustó considerando un rango de interés de 0.05 Hz a 250 Hz, acorde con los estándares internacionales para señales electrocardiográficas de alta resolución.  
+
+Según el teorema de Nyquist, para evitar aliasing es necesario muestrear al menos al doble de la frecuencia máxima presente en la señal, lo que en este caso corresponde a 500 Hz. Sin embargo, se optó por una frecuencia de muestreo de 2000 Hz, es decir, cuatro veces la frecuencia de Nyquist, con el fin de garantizar una mayor fidelidad en la reconstrucción digital, mejorar la precisión en la detección de eventos rápidos como los picos R, y facilitar el análisis espectral detallado sin distorsión.  
+
+         import nidaqmx
+         from nidaqmx.constants import AcquisitionType
+         import numpy as np
+         import matplotlib.pyplot as plt
+         import time  
+
+         frecuencia_muestreo = 2000       
+         canal_daq = "Dev5/ai0"           
+         muestras_por_bloque = 500        
+         tiempo_buffer = 5                 
+
+         datos_capturados = []        
+         inicio = time.time()    
+
+    with nidaqmx.Task() as tarea:
+       tarea.ai_channels.add_ai_voltage_chan(canal_daq)
+       tarea.timing.cfg_samp_clk_timing(
+        freq=frecuencia_muestreo,
+        sample_mode=AcquisitionType.CONTINUOUS
+    )
+    tarea.in_stream.input_buf_size = int(frecuencia_muestreo * tiempo_buffer)
+
+    print("Iniciando adquisición continua... (Ctrl + C para finalizar)")
+    try:
+        while True:
+            bloque = tarea.read(number_of_samples_per_channel=muestras_por_bloque)
+            datos_capturados.extend(bloque)
+    except KeyboardInterrupt:
+        print("\nAdquisición interrumpida por el usuario.")
+    finally:
+        tiempo_total = time.time() - inicio
+        print(f"Tiempo total de adquisición: {tiempo_total:.2f} segundos") .
+
+
+         datos_capturados = np.array(datos_capturados)
+         tiempo = np.arange(0, len(datos_capturados)) / frecuencia_muestreo
+
+         plt.figure(figsize=(10, 5))
+         plt.plot(tiempo, datos_capturados, color='steelblue')
+         plt.xlabel("Tiempo [s]")
+         plt.ylabel("Amplitud [V]")
+         plt.title("Registro EMG")
+         plt.grid(True)
+         plt.show()  
+
+         ruta_guardado = f"C:/Users/carlo/.spyder-py3/RegistroEMG_{frecuencia_muestreo}.txt"
+         np.savetxt(ruta_guardado, datos_capturados)
+         print(f"Archivo guardado en: {ruta_guardado}")  
+    
 
 # PARTE B   
 ## c. Pre-procesamiento de la señal   
+
 
 ## d. Análisis de la HRV en el dominio del tiempo  
 
@@ -93,34 +148,35 @@ De manera conjunta, la HRV y el diagrama de Poincaré permiten comprender no só
 
 # REFERENCIAS 
 
-
--Berntson, G. G., et al. (1997). Heart rate variability: Origins, methods, and interpretive caveats. Psychophysiology.
-
-
--Brennan, M., Palaniswami, M., & Kamen, P. (2001). Do existing measures of Poincaré plot geometry reflect nonlinear features of HRV? IEEE TBME.
+- Berntson, G. G., et al. (1997). Heart rate variability: Origins, methods, and interpretive caveats. Psychophysiology.
 
 
--Guyton, A. & Hall, J. (2021). Textbook of Medical Physiology. Elsevier.
+- Brennan, M., Palaniswami, M., & Kamen, P. (2001). Do existing measures of Poincaré plot geometry reflect nonlinear features of HRV? IEEE TBME.
 
 
--Kamen, P., & Tonkin, A. (1995). Application of the Poincaré plot to heart rate variability. IEEE Eng Med Biol.
+- Guyton, A. & Hall, J. (2021). Textbook of Medical Physiology. Elsevier.
 
 
--Klabunde, R. (2011). Cardiovascular Physiology Concepts.
+- Kamen, P., & Tonkin, A. (1995). Application of the Poincaré plot to heart rate variability. IEEE Eng Med Biol.
 
 
--Laborde, S., Mosley, E., & Thayer, J. (2017). Heart rate variability and self-regulation. Frontiers in Psychology.
+- Klabunde, R. (2011). Cardiovascular Physiology Concepts.
 
 
--Shaffer, F., & Ginsberg, J. P. (2017). An overview of HRV metrics and norms. Frontiers in Public Health.
+- Laborde, S., Mosley, E., & Thayer, J. (2017). Heart rate variability and self-regulation. Frontiers in Psychology.
 
 
--Task Force of the ESC. (1996). Heart rate variability: Standards of measurement, physiological interpretation, and clinical use. Circulation.
+- Shaffer, F., & Ginsberg, J. P. (2017). An overview of HRV metrics and norms. Frontiers in Public Health.
 
 
--Thayer, J., et al. (2012). A meta-analysis of HRV and autonomic function. Neuroscience & Biobehavioral Reviews.
+- Task Force of the ESC. (1996). Heart rate variability: Standards of measurement, physiological interpretation, and clinical use. Circulation.
 
 
--Tulppo, M., et al. (1996). Quantitative beat-to-beat analysis of heart rate dynamics. Am J Physiol.
+- Thayer, J., et al. (2012). A meta-analysis of HRV and autonomic function. Neuroscience & Biobehavioral Reviews.
+
+
+- Tulppo, M., et al. (1996). Quantitative beat-to-beat analysis of heart rate dynamics. Am J Physiol.
+
+- Bistel Esquivel, R. A., & Fajardo Márquez, A. (2015). Diseño de un sistema de adquisición y procesamiento de la señal de ECG basado en instrumentación virtual. Ingeniería Electrónica, Automática y Comunicaciones, 36(1).
 
 
