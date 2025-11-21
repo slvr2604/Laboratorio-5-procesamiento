@@ -200,6 +200,46 @@ Al final se optó por hacerlo con un pasabanda con funciones de phyton, tambien 
        senal_ecg_filtrada = filtfilt(coeficientes_b_pasabanda, coeficientes_a_pasabanda, senal)
        senal_ecg_filtrada = filtfilt(coeficientes_b_rechaza_60hz, coeficientes_a_rechaza_60hz, senal_ecg_filtrada)
 
+<img width="1012" height="470" alt="image" src="https://github.com/user-attachments/assets/2bdca0f4-7627-453a-8f1a-8d5ccdfcde30" />
+
+<img width="1032" height="470" alt="image" src="https://github.com/user-attachments/assets/e31b8a13-4a2f-4ef1-a7c9-9cee05d4f2b6" />  
+
+Después se dividió la señal filtrada en dos segmentos, los primeros 2 minutos donde la persona estaba en resposo y los otros en los que permanecía hablando.
+
+       duracion_segundos = 120              # duración de cada segmento
+       muestras_segmento = duracion_segundos * fs   # 120 s × fs Hz
+
+       senal_segmento1 = senal_ecg_filtrada[:muestras_segmento]
+
+       senal_segmento2 = senal_ecg_filtrada[muestras_segmento : 2 * muestras_segmento]
+
+       t_segmento1 = np.arange(len(senal_segmento1)) / fs
+       t_segmento2 = np.arange(len(senal_segmento2)) / fs + 120 
+
+Luego se graficaron en su forma original y también con zoom:  
+
+       plt.figure(figsize=(12,4))
+       plt.plot(t_segmento1, senal_segmento1, color='purple')
+       plt.title("Segmento 1 — Reposo (0–120 s)")
+       plt.xlabel("Tiempo [s]")
+       plt.ylabel("Amplitud [V]")
+       plt.grid(True)
+       plt.show()
+
+**Segmento 1 (Reposo)**  
+<img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/fa197875-c004-41d6-8315-2f03f2166cfb" />
+<img width="1002" height="374" alt="image" src="https://github.com/user-attachments/assets/4a3f8def-dd34-4436-9247-ce1cbd09b953" />
+
+**Segmento 2 (Leyendo)**  
+<img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/6ac1714f-aa76-4a78-af28-f6375a450c8a" />
+<img width="1006" height="374" alt="image" src="https://github.com/user-attachments/assets/7d8a419c-5aba-45e4-b949-4e9400bee643" />
+
+# DESDE ACAAAA
+Luego, se identificaron los picos R en cada uno de los segmentos y se calcularon los intervalos R-R 
+
+
+
+
 
 
 ## d. Análisis de la HRV en el dominio del tiempo  
