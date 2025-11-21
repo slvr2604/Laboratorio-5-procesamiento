@@ -297,6 +297,20 @@ Y se generan las gráficas:
 
 <img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/b6a28f28-45f7-483e-8602-3dd85dc72bf7" />
 <img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/03eef450-aa02-43b7-8eaf-08553e26697f" />
+Y adicionalemte se arrojan los primeros intervalos de las gráficas: 
+Primeros intervalos RR (reposo): [0.25   0.2535 0.425  0.303  0.4465 0.275  0.423  0.277  0.4385 0.2635]
+Primeros intervalos RR (lectura): [0.4445 0.298  0.425  0.281  0.447  0.256  0.4535 0.2605 0.399  0.318 ]
+<img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/5f8b2c3b-1d97-4270-be2f-2d3a2d5f621b" />
+Y observamos la serie de intervalos:
+<img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/4284b71c-38e4-49b5-8cc4-a410faace381" />
+
+Los intervalos RR oscilan aproximadamente entre 0.25 s y 0.55 s, con algunos picos aislados hasta ~0.65 s.
+Esto corresponde a una frecuencia cardiaca aproximada de:
+
+100 latidos por m
+
+En reposo normal esperarías 60–100 lpm (RR ≈ 0.6–1 s).
+✔️ Tu señal parece provenir de una persona joven/entrenada o de un segmento de mayor frecuencia cardiaca, pero con variabilidad fisiológica clara.
 
 
 
