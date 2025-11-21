@@ -325,10 +325,7 @@ media_RR_lectura = np.mean(intervalos_RR_lectura)
 sdnn_reposo = np.std(intervalos_RR_reposo)
 sdnn_lectura = np.std(intervalos_RR_lectura)
 ```
-
-Segmento	Media RR (s)	SDNN (s)
-Reposo	  0.3679 s	    0.0965 s
-Lectura	   0.3262 s	    0.0640 s
+En reposo la media RR es de 0.3679 s y durante la lectura es de 0.3262 s. En el SDNN en reposo es de 0.0965s y en lectura es de 0.0640s.
 
 En la media RR encontramos que es mayor en reposo, lo cual significa que la frecuencia cardíaca es menor, como es fisiológico.
 Durante la lectura, la media RR disminuye por lo que la frecuencia cardíaca aumenta, haciendo referencia a una mayor activación.
