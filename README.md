@@ -83,8 +83,12 @@ De manera conjunta, la HRV y el diagrama de Poincaré permiten comprender no só
 
 
 # PARTE B   
-c. Pre-procesamiento de la señal  
+## c. Pre-procesamiento de la señal   
+
+## d. Análisis de la HRV en el dominio del tiempo  
+
 # PARTE C  
+## e. Construcción del diagrama de Poincaré   
 
 
 # REFERENCIAS 
