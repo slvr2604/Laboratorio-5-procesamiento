@@ -8,6 +8,8 @@ Asimismo, se construyó el diagrama de Poincaré para cada segmento, del cual se
 ## Diagrama de flujo  
 Como primera etapa, se elaboró un diagrama de flujo que permitió estructurar tanto la programación como el procedimiento general del análisis. Esta herramienta facilitó la organización lógica de las tareas, definiendo el orden de ejecución, las funciones necesarias y los criterios de procesamiento aplicados.
 
+
+
 # PARTE A  
 
 ## a. Fundamento teórico 
@@ -32,6 +34,7 @@ Cuando domina el parasimpático, la despolarización del nodo sinusal se hace m�
 
 En pocas palabras:
 más simpático = corazón rápido y menos variable
+
 más parasimpático = corazón lento y más variable.
 
 
@@ -69,9 +72,9 @@ Por el contrario, cuando la actividad simpática aumenta (como durante estrés, 
 
 Por esa razón, la HRV se utiliza como una herramienta para evaluar el balance autonómico:
 
-HRV alta → más control vagal → organismo en un estado flexible y tranquilo.
+HRV alta = más control vagal = organismo en un estado flexible y tranquilo.
 
-HRV baja → más control simpático → organismo en alerta o en mayor exigencia.
+HRV baja = más control simpático = organismo en alerta o en mayor exigencia.
 
 En el contexto del laboratorio, comparar la HRV durante los primeros dos minutos (reposo) con la HRV de los dos minutos de lectura permite observar cómo cambia este equilibrio. Como hablar en voz alta requiere coordinación respiratoria y atención, lo normal es que la actividad simpática aumente y la variabilidad disminuye.
 
