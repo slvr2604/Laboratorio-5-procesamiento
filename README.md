@@ -312,7 +312,8 @@ Esto corresponde a una frecuencia cardiaca aproximada de:
 100 latidos por m
 
 En reposo normal esperarías 60–100 lpm (RR ≈ 0.6–1 s).
-✔️ Tu señal parece provenir de una persona joven/entrenada o de un segmento de mayor frecuencia cardiaca, pero con variabilidad fisiológica clara.
+
+Tu señal parece provenir de una persona joven/entrenada o de un segmento de mayor frecuencia cardiaca, pero con variabilidad fisiológica clara.
 
 
 
