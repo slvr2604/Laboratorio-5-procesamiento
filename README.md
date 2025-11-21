@@ -308,7 +308,6 @@ Primeros intervalos RR (lectura): [0.4445 0.298  0.425  0.281  0.447  0.256  0.4
 <img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/5f8b2c3b-1d97-4270-be2f-2d3a2d5f621b" />
 Y observamos la serie de intervalos tanto en reposo como durante la lectura.
 <img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/4284b71c-38e4-49b5-8cc4-a410faace381" />
-<img width="1010" height="393" alt="image" src="https://github.com/user-attachments/assets/d5272ae3-6ed4-4dd4-9cf0-7be5b707a5fa" />
 
 Los intervalos RR oscilan aproximadamente entre 0.25 s y 0.55 s, con algunos picos aislados hasta ~0.65 s.
 Esto corresponde a una frecuencia cardiaca aproximada de:
