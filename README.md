@@ -8,6 +8,8 @@ Asimismo, se construyó el diagrama de Poincaré para cada segmento, del cual se
 ## Diagrama de flujo  
 Como primera etapa, se elaboró un diagrama de flujo que permitió estructurar tanto la programación como el procedimiento general del análisis. Esta herramienta facilitó la organización lógica de las tareas, definiendo el orden de ejecución, las funciones necesarias y los criterios de procesamiento aplicados.
 
+<img width="1280" height="863" alt="image" src="https://github.com/user-attachments/assets/ea38eaa8-b10e-4b6a-acff-06e5cacaa77a" />
+
 
 
 # PARTE A  
