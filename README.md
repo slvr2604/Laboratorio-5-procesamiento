@@ -271,7 +271,6 @@ Este código utiliza la función `find_peaks()` de `scipy.signal` para detectar 
 La `senal_segmento1` representa el ECG en reposo (0–120 s).
 Y la `senal_segmento2` representa el ECG en lectura (120–240 s).
 Los picos R son los puntos más altos del complejo QRS y son esenciales para calcular los intervalos RR y posteriormente la HRV.
-Cuando hacemos la comparación del HRV en el dominio del tiempo encontramos que: 
 Y para el cálculo de los picos R-R:
 
 ```
