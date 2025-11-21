@@ -138,7 +138,18 @@ Según el teorema de Nyquist, para evitar aliasing es necesario muestrear al men
 
 # PARTE B   
 ## c. Pre-procesamiento de la señal   
-Inicialmente se graficó el ECG sin filtrar, que dio como resultado:  
+Se importaron las librerías necesarias para el procesamiento de la señal y se descargó el ECG. Fue cargado en el Drive de Colab, lo que permitió su manipulación directa desde el notebook. A partir de los datos obtenidos, se realizó la visualización inicial de la señal sin aplicar ningún tipo de filtrado. La primera gráfica muestra la señal ECG original completa, mientras que la segunda tiene zoom, con el fin de observar con mayor detalle la morfología del complejo PQRST y evaluar la calidad de la señal antes del procesamiento.  
+
+     fs = 2000
+     t = np.arange(len(senal)) / fs
+     plt.figure(figsize=(12,5))
+     plt.plot(t, senal, color='purple', linewidth=1)
+     plt.title('Señal ECG')
+     plt.xlabel('Tiempo [s]')
+     plt.ylabel('Amplitud [V]')
+     plt.grid(True)
+     plt.show()
+
 <img width="1006" height="470" alt="image" src="https://github.com/user-attachments/assets/fd8c0479-bfa6-4db7-879e-c8fcbfbb9a30" />  
 <img width="1020" height="470" alt="image" src="https://github.com/user-attachments/assets/a3c16acf-c4a9-45b2-a002-b7a2e894a91a" />  
 
