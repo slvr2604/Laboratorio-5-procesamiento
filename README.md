@@ -283,6 +283,17 @@ Donde:
 `intervalos_RR` es el	vector de intervalos RR listos para análisis HRV
 `print(...[:10])`	Muestra los primeros 10 intervalos para ver si son correctos
 
+Luego se calcula la serie temporal RR con el siguiente código:
+```
+# Construcción de tiempo RR para graficar (se escala a 120 s)
+tiempo_RR_reposo = np.linspace(0, 120, len(intervalos_RR_reposo))
+tiempo_RR_lectura = np.linspace(120, 240, len(intervalos_RR_lectura))
+```
+Donde:
+`tiempo_RR_reposo = np.linspace(0, 120, len(intervalos_RR_reposo))` se encarga de generar un vector de tiempo entre 0 y 120 segundos, con tantos puntos como intervalos RR en reposo. 
+`tiempo_RR_lectura = np.linspace(120, 240, len(intervalos_RR_lectura))` y genera un vector de tiempo entre 120 y 240 segundos, con tantos puntos como intervalos RR durante la lectura. lo que nos permite graficar este segundo segmento a continuación del primero sin superposición.
+
+Y se generan las gráficas:
 
 <img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/b6a28f28-45f7-483e-8602-3dd85dc72bf7" />
 <img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/03eef450-aa02-43b7-8eaf-08553e26697f" />
