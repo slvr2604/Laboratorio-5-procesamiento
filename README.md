@@ -5,5 +5,8 @@ Posteriormente, la señal filtrada se dividió en dos segmentos: los primeros do
 
 Asimismo, se construyó el diagrama de Poincaré para cada segmento, del cual se obtuvieron los índices SD1, SD2, CVI y CSI, los cuales permiten evaluar de manera separada la actividad parasimpática y simpática del sistema nervioso autónomo. Este análisis permitió comparar de manera cuantitativa y visual cómo la carga cognitiva durante la lectura modifica el ritmo cardíaco y su variabilidad.  
 
-#PARTE B  
-c. Pre-procesamiento de la señal
+# PARTE A  
+# PARTE B   
+c. Pre-procesamiento de la señal  
+# PARTE C  
+
