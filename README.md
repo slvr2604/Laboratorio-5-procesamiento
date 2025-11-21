@@ -6,7 +6,7 @@ Posteriormente, la señal filtrada se dividió en dos segmentos: los primeros do
 Asimismo, se construyó el diagrama de Poincaré para cada segmento, del cual se obtuvieron los índices SD1, SD2, CVI y CSI, los cuales permiten evaluar de manera separada la actividad parasimpática y simpática del sistema nervioso autónomo. Este análisis permitió comparar de manera cuantitativa y visual cómo la carga cognitiva durante la lectura modifica el ritmo cardíaco y su variabilidad.  
 
 # Diagrama de flujo.
-Como primera etapa, se elaboró un diagrama de flujo que permitió estructurar tanto la programación como el procedimiento general del análisis. Esta herramienta facilitó la organización lógica de las tareas, definiendo el orden de ejecución, las funciones necesarias y los criterios de procesamiento que se aplicarían
+Como primera etapa, se elaboró un diagrama de flujo que permitió estructurar tanto la programación como el procedimiento general del análisis. Esta herramienta facilitó la organización lógica de las tareas, definiendo el orden de ejecución, las funciones necesarias y los criterios de procesamiento aplicados.
 
 # PARTE A  
 
