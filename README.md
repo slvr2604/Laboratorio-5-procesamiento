@@ -138,6 +138,68 @@ Según el teorema de Nyquist, para evitar aliasing es necesario muestrear al men
 
 # PARTE B   
 ## c. Pre-procesamiento de la señal   
+Inicialmente se graficó el ECG sin filtrar, que dio como resultado:  
+<img width="1006" height="470" alt="image" src="https://github.com/user-attachments/assets/fd8c0479-bfa6-4db7-879e-c8fcbfbb9a30" />  
+<img width="1020" height="470" alt="image" src="https://github.com/user-attachments/assets/a3c16acf-c4a9-45b2-a002-b7a2e894a91a" />  
+
+Inicialmente se intentó implementar un filtro IIR pasabanda, pero los cálculos requeridos presentaban un alto nivel de complejidad, especialmente al justificar manualmente los coeficientes y garantizar la estabilidad del sistema. Por esta razón, se optó por una estrategia alternativa: aplicar un filtro FIR pasaalto para eliminar la deriva de baja frecuencia, seguido de un filtro IIR pasabajo para atenuar el ruido de alta frecuencia.
+
+Sin embargo, durante la implementación del filtro IIR pasabajo aparecía una línea recta, lo cual indicaba una posible saturación e incluso cierta inestabilidad que pudo ser numérica o se le atribuye a errores en la inicialización del filtro. Por otro lado, el filtro FIR pasaalto generó coeficientes excesivamente largos, lo que dificultó su cálculo manual y su validación. Esto evidenció la necesidad de utilizar funciones para el la implementacón del mismo.  
+**PEGAR CALCULOSSS**  
+Al final se optó por hacerlo con un pasabanda con funciones de phyton, tambien se ingreso la ecuación en diferencias para que alobtener los coeficientes computacionalmente se reemplazaran alli
+
+
+       frecuencia_corte_baja_hz = 1.0
+       frecuencia_corte_alta_hz = 40.0
+
+       frecuencia_normalizada_baja = frecuencia_corte_baja_hz / (fs / 2)
+       frecuencia_normalizada_alta = frecuencia_corte_alta_hz / (fs / 2)
+
+       coeficientes_b_pasabanda, coeficientes_a_pasabanda = butter(
+           4,
+           [frecuencia_normalizada_baja, frecuencia_normalizada_alta],
+           btype='bandpass'
+       )
+
+
+       coeficientes_b_rechaza_60hz, coeficientes_a_rechaza_60hz = iirnotch(60 / (fs / 2),
+       30
+       )
+
+       print("Coeficientes del filtro pasa banda:")
+       print("b =", coeficientes_b_pasabanda)
+       print("a =", coeficientes_a_pasabanda)
+
+       print("\nCoeficientes del filtro Notch 60 Hz:")
+       print("b =", coeficientes_b_rechaza_60hz)
+       print("a =", coeficientes_a_rechaza_60hz)
+
+
+
+       def filtro_IIR_simple(x, b, a):
+           y = np.zeros(len(x))
+           for n in range(len(x)):
+               y[n] = sum(b[k] * x[n-k] for k in range(len(b)) if n-k >= 0) \
+                    - sum(a[k] * y[n-k] for k in range(1, len(a)) if n-k >= 0)
+           return y
+
+
+       senal_filtrada_pasabanda_manual = filtro_IIR_simple(
+           senal, 
+           coeficientes_b_pasabanda, 
+           coeficientes_a_pasabanda
+       )
+
+       senal_filtrada_total_manual = filtro_IIR_simple(
+           senal_filtrada_pasabanda_manual,
+           coeficientes_b_rechaza_60hz,
+           coeficientes_a_rechaza_60hz
+       )
+
+
+       senal_ecg_filtrada = filtfilt(coeficientes_b_pasabanda, coeficientes_a_pasabanda, senal)
+       senal_ecg_filtrada = filtfilt(coeficientes_b_rechaza_60hz, coeficientes_a_rechaza_60hz, senal_ecg_filtrada)
+
 
 
 ## d. Análisis de la HRV en el dominio del tiempo  
