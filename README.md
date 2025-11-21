@@ -248,19 +248,94 @@ Luego se graficaron en su forma original y también con zoom:
 <img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/6ac1714f-aa76-4a78-af28-f6375a450c8a" />
 <img width="1006" height="374" alt="image" src="https://github.com/user-attachments/assets/7d8a419c-5aba-45e4-b949-4e9400bee643" />
 
-# DESDE ACAAAA
+
 Luego, se identificaron los picos R en cada uno de los segmentos y se calcularon los intervalos R-R 
 
 
-
-
-
-
 ## d. Análisis de la HRV en el dominio del tiempo  
+Para el análisis de la HRV se usa el siguiente código:
+```
+picos_R_reposo, _ = find_peaks(
+    senal_segmento1,
+    distance=int(0.25 * fs)    # separación mínima de 250 ms
+)
 
-# PARTE C  
-## e. Construcción del diagrama de Poincaré   
+picos_R_lectura, _ = find_peaks(senal_segmento2, distance=int(0.25 * fs))
+```
+Este código utiliza la función `find_peaks()` de `scipy.signal` para detectar picos R en dos segmentos de señal ECG:
+La `senal_segmento1` representa el ECG en reposo (0–120 s).
+Y la `senal_segmento2` representa el ECG en lectura (120–240 s).
+Los picos R son los puntos más altos del complejo QRS y son esenciales para calcular los intervalos RR y posteriormente la HRV.
+Cuando hacemos la comparación del HRV en el dominio del tiempo encontramos que: 
+Y para el cálculo de los picos R-R:
 
+```
+intervalos_RR_reposo = np.diff(picos_R_reposo) / fs
+intervalos_RR_lectura = np.diff(picos_R_lectura) / fs
+
+print("Primeros intervalos RR (reposo):", intervalos_RR_reposo[:10])
+print("Primeros intervalos RR (lectura):", intervalos_RR_lectura[:10])
+```
+Donde:
+
+`np.diff(picos_R)`	Calcula la distancia entre picos R consecutivos (en muestras)
+`/ fs`	Convierte esa distancia de muestras a segundos
+`intervalos_RR` es el	vector de intervalos RR listos para análisis HRV
+`print(...[:10])`	Muestra los primeros 10 intervalos para ver si son correctos
+
+
+<img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/b6a28f28-45f7-483e-8602-3dd85dc72bf7" />
+<img width="1012" height="393" alt="image" src="https://github.com/user-attachments/assets/03eef450-aa02-43b7-8eaf-08553e26697f" />
+
+
+
+Segmento	Media RR (s)	SDNN (s)
+Reposo	  0.3679 s	    0.0965 s
+Lectura	   0.3262 s	    0.0640 s
+
+En la media RR encontramos que es mayor en reposo, lo cual significa que la frecuencia cardíaca es menor, como es fisiológico.
+Durante la lectura, la media RR disminuye por lo que la frecuencia cardíaca aumenta, haciendo referencia a una mayor activación.
+Por otro lado, el SDNN representa la variabilidad total, controlada por simpático y parasimpático.
+Cuando está en reposo nos da un valor de 0.0965 s lo que es mayor que en la lectura que es de 0.0640 s, lo que nos indica una mayor variabilidad cardiaca en reposo.
+Es decir que el comportamiento es coherente, cuando hay reposo hay una mayor variabilidad, lo que inidica más fluencia vagal y cuando se hace una lectura, hay menor variabilidad, lo que indica más control simpático.
+
+
+# Parte C.
+## e. Comparación del diagrama de poincaré.
+
+Cuando está en reposo hay una nube de puntos más dispersión, especialmente en el eje transversal (SD1), a su vez hay mayor variabilidad latido a latido. También se observan sub-clusters que indican respiración sinusal.
+Ahora, durante la lectura la nube es más compacta y hay menor dispersión trasnversal en SD1 y longitudinal en SD2. Es decir que cuando está en reposo hay mayor dispersión, por lo que hay un mayor tono vagal. Y cuando está leyendom la dispersión se reduce por lo que hay mayor tónico.
+
+Para interpretar los datos obtenido en el diagrama Poincaré:
+En el SD1 Y SD2.
+### SD1.
+El reposo es de 0.1289 s y en lectura es de 0.0821 s.
+Reposo: 0.1289 s
+
+Es decir que SD1 disminuye notablemente durante la lectura, lo que indica una reducción de la actividad parasimpática.
+Esto es coherente con una mayor demanda cognitiva ya que el cuerpo atenúa la relajación para permitir mayor atención.
+
+### SD2.
+En reposo es de 0.0448s y cuando lee es de 0.0380s. Por lo que aunque SD2 también disminuye en lectura, lo hace en menor medida que SD1.
+Esto sugiere que la variabilidad total se reduce, pero lo más afectado es el componente parasimpático (SD1), lo que indica un desplazamiento hacia mayor actividad simpática.
+
+  En el Índice CVI es decir la actividad vagal, el reposo se ubica en –2.2390 mientras en la lectura se encuentra en –2.5061
+Lo que nos indica que un CVI menos negativo representa mayor influencia vagal. Por tanto, el CVI es mayor en reposo, confirmando que la actividad parasimpática domina cuando no hay exigencia cognitiva.
+Y durante la lectura, el CVI disminuye, indicando supresión vagal típica del estado de concentración.
+
+3. Índice CSI (actividad simpática)​
+En reposo se encuentra en: 0.3474.
+Y en lectura en 0.4620.
+Por lo que los valores más altos indican mayor actividad simpática, asociada a alerta, estrés o tareas cognitivas.
+A su vez el CSI aumenta durante la lectura indicando mayor tono simpático y el aumento no es extremo, lo que indica una activación fisiológica moderada, consistente con una tarea de lectura, no con estrés intenso.
+
+En conjunto, los cuatro parámetros (SD1, SD2, CVI, CSI) muestran un patrón claro:
+La componente autonómico tiene dominancia en reposo	
+La dominancia en lectura es parasimpático.
+Tiene alta variabilidad rápida y actividad vagal predominante.
+
+En la lectura de los 2–4 minutos hay una reducción marcada de SD1 lo que indica una disminución parasimpática.
+Al aumento del CSI hay una mayor actividad simpática, lo que refleja una activación compatible con concentración y atención cognitiva.
 
 # REFERENCIAS 
 
