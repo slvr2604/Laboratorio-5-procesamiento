@@ -406,11 +406,12 @@ Esto es coherente con una mayor demanda cognitiva ya que el cuerpo atenúa la re
 ### SD2.
 En reposo es de 0.0448s y cuando lee es de 0.0380s. Por lo que aunque SD2 también disminuye en lectura, lo hace en menor medida que SD1.
 Esto sugiere que la variabilidad total se reduce, pero lo más afectado es el componente parasimpático (SD1), lo que indica un desplazamiento hacia mayor actividad simpática.
+### CVI
 En el Índice CVI es decir la actividad vagal, el reposo se ubica en –2.2390 mientras en la lectura se encuentra en –2.5061
 Lo que nos indica que un CVI menos negativo representa mayor influencia vagal. Por tanto, el CVI es mayor en reposo, confirmando que la actividad parasimpática domina cuando no hay exigencia cognitiva.
 Y durante la lectura, el CVI disminuye, indicando supresión vagal típica del estado de concentración.
 
-3. Índice CSI (actividad simpática)​
+### Índice CSI (actividad simpática)​
 En reposo se encuentra en: 0.3474.
 Y en lectura en 0.4620.
 Por lo que los valores más altos indican mayor actividad simpática, asociada a alerta, estrés o tareas cognitivas.
